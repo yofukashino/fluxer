@@ -71,6 +71,7 @@ import {
 	focusVoicePopoutWindow,
 	getActiveAllowTransparency,
 	getActiveUseNativeTitleBar,
+	getElectronLoadErrorCode,
 	getMainWindow,
 	setThemeStudioPopoutAlwaysOnTop,
 	setVoicePopoutAlwaysOnTop,
@@ -232,6 +233,9 @@ export function registerIpcHandlers(): void {
 		try {
 			await mainWindow.loadURL(instanceOrigin);
 		} catch (error) {
+			if (getElectronLoadErrorCode(error) === -3) {
+				return;
+			}
 			setCustomAppUrl(null);
 			pendingDesktopHandoffCode = null;
 			const detail = error instanceof Error ? error.message : String(error);

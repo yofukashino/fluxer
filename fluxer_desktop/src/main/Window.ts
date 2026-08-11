@@ -88,7 +88,7 @@ function shouldRetryAppLoadFailure(errorCode: number): boolean {
 	return errorCode < 0 && errorCode !== -3;
 }
 
-function getElectronLoadErrorCode(error: unknown): number | null {
+export function getElectronLoadErrorCode(error: unknown): number | null {
 	const message = error instanceof Error ? error.message : String(error);
 	const match = /\(([-\d]+)\)/.exec(message);
 	if (!match) return null;
